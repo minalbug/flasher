@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/3ee0f23889.js" crossorigin="anonymous"></script>
+    <title>Wallet Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<style>
+ @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;900&display=swap');
+
+ body {
+   font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #010101;
+    background-color: #FFFFFF;
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px;
+    background-color: #fff;
+}
+.header .settings {
+    width: 26px;
+    height: 26px;
+    background-color: #ddd;
+    border-radius: 50%;
+}
+.wallet {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    background-color: #fff;
+}
+.wallet .wallet-info {
+    text-align: center;
+}
+.wallet .wallet-info p {
+    border: none;
+    background: none;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+.wallet .wallet-info .amount {
+    font-size: 24px;
+    padding-left: 0px;
+    font-weight: bold;
+}
+.actions {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+}
+.actions .action {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.actions .action .icon {
+    width: 47px;
+    height: 47px;
+    background-color: #F4F3F8;;
+    border-radius: 50%;
+    margin-bottom: 5px;
+}
+.tabs {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    padding-top: 40px;
+    background-color: #fff;
+}
+.tabs .tab {
+    margin: 0 10px;
+    padding: 5px 10px;
+    border-bottom: 2px solid transparent;
+}
+.tabs .tab.active {
+    border-bottom: 2px solid blue;
+}
+.notification {
+    width: 26px;
+    height: 26px;
+    background-color: #ddd;
+    border-radius: 50%;
+}
+.search-container {
+    display: flex;
+    align-items: center;
+    border: none;
+    border-radius: 4px;
+    padding: 2px;
+    width: 95%;
+}
+.search-container input {
+    border: none;
+    outline: none;
+    height: 20px;
+    background: #F4F4F6;
+    width: 100%;
+    color: #010101;
+    font-size: 16px;
+}
+.search-container button {
+    background: none;
+    border: none;
+    padding: 0 5px; /* Add padding for better alignment */
+}
+.search-container button img {
+    width: 16px;
+    height: 16px;
+}
+/* Popup styles */
+.popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+.popup-content {
+    background-color: #fff;
+    padding: 18px;
+    border-radius: 5px;
+    text-align: center;
+    position: relative;
+    animation: popupAnimation 0.5s ease-out forwards;
+}
+.popup-content.top {
+    top: -100%;
+}
+.popup-content.bottom {
+    bottom: -100%;
+}
+@keyframes popupAnimation {
+    from { transform: translateY(-100%); }
+    to { transform: translateY(0); }
+}
+@keyframes popupAnimationBottom {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+}
+.close-btn {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+}
+.loading-bar {
+    width: 0;
+    height: 10px;
+    background-color: blue;
+    margin: 10px 0;
+}
+.message {
+    margin-top: 10px;
+}
+.error {
+    color: red;
+    margin-top: 10px;
+}
+    }
+        .continer {
+            padding: 20px;
+        }
+        .crypto-item {
+            display: flex;
+            align-items: center;
+            background-color: #fff;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .crypto-item img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+        .crypto-info {
+            flex: 1;
+        }
+        .crypto-price {
+            text-align: right;
+            color: red;
+        }
+        .crypto-value {
+            text-align: right;
+            color: #333;
+        }
+        .footer {
+            display: flex;
+            justify-content: space-around;
+            background-color: #fff;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .footer div {
+            text-align: center;
+        }
+        .footer img {
+            width: 24px;
+            height: 24px;
+        }
+        .footer-text {
+            margin-top: 5px;
+            font-size: 12px;
+        }
+        .highlight {
+            color: blue;
+            text-align: center;
+            padding-top: 17px;
+        }
+        .action i {
+          color: #1F242E;
+          font-size: 2px;
+        }
+        .popup-content .transaction-container {
+          border: 1px solid #ddd;
+          padding: 10px;
+          margin: 5px 0;
+          border-radius: 5px;
+          background-color: #f9f9f9;
+        }
+        input {
+          width: 90%;
+          height: 26px;
+          font-size: 18px;
+          border: 1px solid #000;
+          border-radius: 5px;
+          color: #000;
+      margin-top: 17px;
+        }
+        .popup-content img {
+          width: 60px;
+        }
+        input {
+             font-family: 'Poppins', sans-serif;
+        }
+        button {
+             font-family: 'Poppins', sans-serif;
+        }
+</style>
+<body>
+       <div class="header">
+        <div class="settings"><i class="fa-solid fa-gear" style="padding-left: 3px; padding-top: 3px; font-size: 19px;"></i></div>
+        <div>Home</div>
+        <div class="notification"><i class="fa-solid fa-plus" style="font-size: 19px; padding-left: 4px; padding-top: 3px;"></i></div>
+    </div>
+    <center>
+        <div class="search-container">
+            <button type="submit">
+                <img src="https://cdn-icons-png.flaticon.com/512/622/622669.png" alt="Search Icon">
+            </button>
+            <input type="text" placeholder="Search...">
+        </div>
+    </center>
+    <div class="wallet">
+        <div class="wallet-info">
+            <p><i class="fa-regular fa-eye"></i> Main Wallet <i class="fa-solid fa-caret-down" style="color: #000;"></i></p>
+            <div class="amount">$0.00</div>
+        </div>
+    </div>
+    <div class="actions">
+        <div class="action" onclick="openBuyPopup()">
+          <div class="icon"><i class="fa-solid fa-plus" style="font-size: 23px; padding-top: 12px; padding-left: 14px;"></i></div>
+          <div>Add</div>
+        </div>
+        <div class="action" onclick="openSendPopup()">
+          <div class="icon"><i class="fa-solid fa-arrow-up-long" style="font-size: 23px; padding-top: 11px; padding-left: 15px;"></i></div>
+          <div>Send</div>
+        </div>
+        <div class="action">
+          <div class="icon"><i class="fa-solid fa-arrow-down-long" style="font-size: 23px; padding-top: 11px; padding-left: 15px;"></i></div>
+          <div>Receive</div>
+        </div>
+        <div class="action">
+          <div class="icon"><i class="fa-solid fa-landmark-dome" style="font-size: 23px; padding-top: 11px; padding-left: 12px;"></i></div>
+          <div>Sell</div>
+        </div>
+        <div class="action" onclick="openHistoryPopup()">
+          <div class="icon"><i class="fa-solid fa-clock-rotate-left" style="font-size: 23px; padding-top: 12px; padding-left: 12px;"></i></div>
+          <div>History</div>
+        </div>
+        </div>
+    <div class="tabs">
+        <div class="tab active">Crypto</div>
+        <div class="tab">NFTs</div>
+    </div>
+
+    <!-- Buy Popup -->
+    <div id="buyPopup" class="popup">
+        <div class="popup-content">
+            <button class="close-btn" onclick="closePopup('buyPopup')" style="width: 38px; height: 38px; clip-path: circle(); font-size: 18px; padding: 5px;">X</button>
+            <h2>Add Crypto</h2>
+            <input type="number" id="buyAmount" placeholder="Enter amount">
+            <button onclick="startBuyProcess()" style="background: #0500FE; margin-top: 30px;">Add up</button>
+            <div class="loading-bar" id="loadingBar"></div>
+            <div class="message" id="buyMessage"></div>
+        </div>
+    </div>
+
+    <!-- Send Popup -->
+    <div id="sendPopup" class="popup">
+        <div class="popup-content">
+            <button class="close-btn" onclick="closePopup('sendPopup')" style="width: 38px; height: 38px; clip-path: circle(); font-size: 18px; padding: 5px;">X</button>
+            <h2>Send Fake Crypto</h2>
+            <img src="b.jpeg" alt="Recipient" style="width: 167px;">
+            <input type="text" id="recipientAddress" placeholder="Recipient Address">
+            <input type="number" id="sendAmount" placeholder="Enter amount">
+            <button onclick="sendAmount()" style="background: #0500FE;">Send</button>
+            <div class="error" id="sendError"></div>
+        </div>
+    </div>
+
+    <!-- Send Success Popup -->
+    <div id="sendSuccessPopup" class="popup">
+      <div class="popup-content">
+        <button class="close-btn" onclick="closePopup('sendSuccessPopup')" style="width: 38px; height: 38px; clip-path: circle(); font-size: 18px; padding: 5px;">X</button>
+       <img src="done.png" alt="Success">
+        <h2>Success</h2>
+        <div class="message" id="sendSuccessMessage" style="font-size: 19px; margin: 0 auto;"></div>
+      </div>
+    </div>
+
+    <!-- History Popup -->
+  <div id="historyPopup" class="popup">
+    <div class="popup-content">
+      <button class="close-btn" onclick="closePopup('historyPopup')" style="width: 38px; height: 38px; clip-path: circle(); font-size: 18px; padding: 5px;">X</button>
+      <h2>History</h2>
+      <div id="historyContent"></div>
+    </div>
+  </div>
+    <!-- No Transactions Popup -->
+    <div id="noTransactionsPopup" class="popup">
+        <div class="popup-content bottom">
+            <button class="close-btn" onclick="closePopup('noTransactionsPopup')" style="width: 38px; height: 38px; clip-path: circle(); font-size: 18px; padding: 5px;">X</button>
+            <h2>No transactions have been made</h2>
+        </div>
+    </div>
+
+    <div class="continer">
+      <div class="crypto-item">
+        <img src="https://cryptologos.cc/logos/bitcoin-btc-logo.png" alt="BTC">
+        <div class="crypto-info">
+          <div>BTC</div>
+          <div>$64,157.48</div>
+        </div>
+        <div class="crypto-price">-2.70%</div>
+        <div class="crypto-value"> $64,157</div>
+      </div>
+      <div class="crypto-item">
+        <img src="https://cryptologos.cc/logos/binance-coin-bnb-logo.png" alt="BNB">
+        <div class="crypto-info">
+          <div>BNB</div>
+          <div>$561.21</div>
+        </div>
+        <div class="crypto-price">-3.95%</div>
+        <div class="crypto-value"> $561.00</div>
+      </div>
+      <div class="crypto-item">
+        <img src="tb.jpeg" alt="TWT">
+        <div class="crypto-info">
+          <div>TWT <span style="background: #F4F4F6; color: #858C99; font-size: 13px; padding: 4px; border-radius: 5px;">BNB Smart Chain</span></div>
+          <div>$0.96</div>
+        </div>
+        <div class="crypto-price">-3.70%</div>
+        <div class="crypto-value">$0.96</div>
+      </div>
+      <div class="crypto-item">
+        <img src="https://cryptologos.cc/logos/polygon-matic-logo.png" alt="MATIC">
+        <div class="crypto-info">
+          <div>MATIC</div>
+          <div>$0.50</div>
+        </div>
+        <div class="crypto-price">-5.15%</div>
+        <div class="crypto-value">$0.50</div>
+      </div>
+      <div class="crypto-item">
+        <img src="https://cryptologos.cc/logos/ethereum-eth-logo.png" alt="ETH">
+        <div class="crypto-info">
+          <div>ETH</div>
+          <div>$3,169.52</div>
+        </div>
+        <div class="crypto-price">-8.07%</div>
+        <div class="crypto-value">$3,169</div>
+      </div>
+      <div class="highlight">Manage crypto
+      <br>
+      <br>
+      <br>
+      <br>
+      </div>
+    </div>
+    <div class="footer">
+      <div>
+        <img src="https://img.icons8.com/ios-filled/50/000000/home.png" alt="Home">
+        <div class="footer-text">Home</div>
+      </div>
+      <div>
+        <img src="https://img.icons8.com/ios-filled/50/000000/transaction-list.png" alt="Swap">
+        <div class="footer-text">Swap</div>
+      </div>
+      <div>
+        <img src="https://img.icons8.com/ios-filled/50/000000/piggy-bank.png" alt="Earn">
+        <div class="footer-text">Earn</div>
+      </div>
+      <div>
+        <img src="https://img.icons8.com/ios-filled/50/000000/compass.png" alt="Discover">
+        <div class="footer-text">Discover</div>
+      </div>
+      <div>
+        <img src="https://img.icons8.com/ios-filled/50/000000/browser.png" alt="Browser">
+        <div class="footer-text">Browser</div>
+      </div>
+    </div>
+    <!-- Buy Popup -->
+    <div id="buyPopup" class="popup">
+        <div class="popup-content">
+            <button class="close-btn" onclick="closePopup('buyPopup')">X</button>
+            <h2>Buy</h2>
+            <input type="number" id="buyAmount" placeholder="Enter amount">
+            <button onclick="startBuyProcess()">Submit</button>
+            <div class="loading-bar" id="loadingBar"></div>
+            <div class="message" id="buyMessage"></div>
+        </div>
+    </div>
+
+    <!-- Send Popup -->
+    <div id="sendPopup" class="popup">
+        <div class="popup-content">
+            <button class="close-btn" onclick="closePopup('sendPopup')">X</button>
+            <h2>Send</h2>
+            <img src="done.png" alt="Recipient" style="width: 10px;">
+            <input type="text" placeholder="Recipient Address">
+            <input type="number" id="sendAmount" placeholder="Enter amount">
+            <button onclick="sendAmount()">Send</button>
+            <div class="error" id="sendError"></div>
+        </div>
+    </div>
+
+    <!-- History Popup -->
+    <div id="historyPopup" class="popup">
+        <div class="popup-content">
+            <button class="close-btn" onclick="closePopup('historyPopup')">X</button>
+            <h2>History</h2>
+            <div id="historyContent"></div>
+        </div>
+    </div>
+
+    <!-- No Transactions Popup -->
+    <div id="noTransactionsPopup" class="popup">
+        <div class="popup-content bottom">
+            <button class="close-btn" onclick="closePopup('noTransactionsPopup')">X</button>
+            <h2>No transactions have been made</h2>
+        </div>
+    </div>
+
+</body>
+<script>
+  let balance = 0;
+  let history = [];
+  
+  function openPopup(popupId) {
+    const popup = document.getElementById(popupId);
+    popup.style.display = 'flex';
+  }
+  
+  function closePopup(popupId) {
+    const popup = document.getElementById(popupId);
+    popup.style.display = 'none';
+  }
+  
+  function openBuyPopup() {
+    openPopup('buyPopup');
+  }
+  
+  function openSendPopup() {
+    openPopup('sendPopup');
+  }
+  
+  function openHistoryPopup() {
+    if (history.length === 0) {
+      openPopup('noTransactionsPopup');
+    } else {
+      const historyContent = document.getElementById('historyContent');
+      historyContent.innerHTML = history.map(entry => `<div class="transaction-container"><p>${entry}</p></div>`).join('');
+      openPopup('historyPopup');
+    }
+  }
+  
+  function startBuyProcess() {
+    const buyAmount = document.getElementById('buyAmount').value;
+    const loadingBar = document.getElementById('loadingBar');
+    const buyMessage = document.getElementById('buyMessage');
+  
+    if (buyAmount) {
+      loadingBar.style.width = '0';
+      buyMessage.textContent = '';
+      loadingBar.style.transition = 'width 2s';
+      loadingBar.style.width = '100%';
+  
+      setTimeout(() => {
+        balance += parseFloat(buyAmount);
+        document.querySelector('.amount').textContent = `$${balance.toFixed(2)}`;
+        buyMessage.textContent = `Congrats! $${buyAmount} has been added to your dashboard.`;
+        document.querySelector('#buyPopup .close-btn').style.display = 'block';
+        history.push(`Bought $${buyAmount}`);
+      }, 2000);
+    }
+  }
+  
+  function sendAmount() {
+    const recipientAddress = document.getElementById('recipientAddress').value;
+    const sendAmount = parseFloat(document.getElementById('sendAmount').value);
+    const sendError = document.getElementById('sendError');
+  
+    sendError.textContent = '';
+  
+    if (sendAmount > balance) {
+      sendError.textContent = 'Not enough balance';
+      return;
+    }
+  
+    balance -= sendAmount;
+    document.querySelector('.amount').textContent = `$${balance.toFixed(2)}`;
+    closePopup('sendPopup');
+    openSendSuccessPopup(sendAmount, recipientAddress);
+    history.push(`Sent $${sendAmount} to ${recipientAddress}`);
+  }
+  
+  function openSendSuccessPopup(amount, address) {
+    const sendSuccessMessage = document.getElementById('sendSuccessMessage');
+    sendSuccessMessage.textContent = `Successfully sent $${amount} to ${address}`;
+    openPopup('sendSuccessPopup');
+    document.querySelector('#sendSuccessPopup .close-btn').style.display = 'block';
+  }
+  
+  document.querySelectorAll('.close-btn').forEach(button => {
+    button.addEventListener('click', () => {
+      button.style.display = 'none';
+    });
+  });
+</script>
